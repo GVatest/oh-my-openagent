@@ -40,6 +40,8 @@ test-injection/
 notepad.md
 oauth-success.html
 *.bun-build
+.opencode/opencode.json
+.opencode/opencode.jsonc
 .omx/
 .dori-sync/
 .dori/

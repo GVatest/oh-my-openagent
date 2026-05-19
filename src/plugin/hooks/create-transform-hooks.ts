@@ -5,6 +5,7 @@ import type { RalphLoopHook } from "../../hooks/ralph-loop"
 import {
   createClaudeCodeHooksHook,
   createKeywordDetectorHook,
+  createTaskClassifierHook,
   createTeamMailboxInjector,
   createTeamModeStatusInjector,
   createThinkingBlockValidatorHook,
@@ -19,6 +20,7 @@ import { safeCreateHook } from "../../shared/safe-create-hook"
 export type TransformHooks = {
   claudeCodeHooks: ReturnType<typeof createClaudeCodeHooksHook> | null
   keywordDetector: ReturnType<typeof createKeywordDetectorHook> | null
+  taskClassifier: ReturnType<typeof createTaskClassifierHook> | null
   contextInjectorMessagesTransform: ReturnType<typeof createContextInjectorMessagesTransformHook>
   teamModeStatusInjector: ReturnType<typeof createTeamModeStatusInjector> | null
   teamMailboxInjector: ReturnType<typeof createTeamMailboxInjector> | null
@@ -66,6 +68,14 @@ export function createTransformHooks(args: {
       )
     : null
 
+  const taskClassifier = isHookEnabled("task-classifier")
+    ? safeCreateHook(
+        "task-classifier",
+        () => createTaskClassifierHook(),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
   const contextInjectorMessagesTransform =
     createContextInjectorMessagesTransformHook(contextCollector)
 
@@ -106,6 +116,7 @@ export function createTransformHooks(args: {
   return {
     claudeCodeHooks,
     keywordDetector,
+    taskClassifier,
     contextInjectorMessagesTransform,
     teamModeStatusInjector,
     teamMailboxInjector,

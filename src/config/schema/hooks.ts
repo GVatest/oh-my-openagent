@@ -20,6 +20,7 @@ export const HookNameSchema = z.enum([
   "auto-update-checker",
   "startup-toast",
   "keyword-detector",
+  "task-classifier",
   "agent-usage-reminder",
   "non-interactive-env",
   "interactive-bash-session",
